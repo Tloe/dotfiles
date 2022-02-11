@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+stow home -t ~
+stow nvim -t ~
+stow i3 -t ~
+stow i3status-rust -t ~
+stow kitty -t ~
+

@@ -1,0 +1,207 @@
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+#
+font pango:monospace 10
+
+# smart_gaps on
+for_window [class=".*"] border pixel 2
+gaps inner 10
+gaps outer -10
+smart_gaps inverse_outer
+smart_borders on
+hide_edge_borders smart_no_gaps
+#border_radius 10
+
+client.focused          #4C7899 #285577 #FFFFFF #2E9EF4   #b57614
+client.focused_inactive #333333 #5F676A #FFFFFF #484E50   #5F676A
+client.unfocused        #333333 #222222 #888888 #292D2E   #222222
+client.urgent           #2F343A #900000 #FFFFFF #900000   #900000
+client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
+
+new_window 1pixel
+
+exec --no-startup-id xsetroot -solid '#171717'
+
+# use these keys for focus, movement, and resize directions when reaching for
+# the arrows is not convenient
+set $up k
+set $down j
+set $left h
+set $right l
+
+bar {
+        strip_workspace_numbers yes
+        status_command /usr/bin/i3status-rs /home/t/.config/i3status-rust/config.toml
+        bindsym button4 nop
+        bindsym button5 nop
+        height 30
+
+        tray_output primary
+
+        tray_padding 2
+        colors {
+          separator          #999999
+          statusline         #aaaaaa
+          background         #222222
+          focused_workspace  #007030 #b57614 #ffffff
+          active_workspace   #555555 #555555 #ffffff
+          inactive_workspace #222222 #222222 #999999
+          urgent_workspace   #2f343a #900000 #ffffff 
+        }
+}
+
+
+#mod = win key
+set $mod Mod4
+
+# floating drag, toggle, focus
+floating_modifier $mod
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+bindsym $mod+Return exec kitty
+bindsym $mod+Shift+q kill
+
+bindsym Print       exec flameshot full
+bindsym Shift+Print exec flameshot gui
+# dmenu
+bindsym $mod+d exec --no-startup-id j4-dmenu-desktop --dmenu="dmenu -i -l 30 -nf '#0A6B76' -nb '#CF9F50' -sb '#393D41' -sf '#FFFFFF' -fn 'monospace-10' -p 'run:'"
+
+# change focus hjkl or arrows
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window hjkl or arrows
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split horizontal/vertical
+bindsym $mod+g split h
+bindsym $mod+v split v
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+f fullscreen toggle
+
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+bindsym $mod+Control+Left move workspace to output left
+bindsym $mod+Control+Right move workspace to output right
+
+bindsym $mod+z exec --no-startup-id "i3-msg -t command 'workspace 3; workspace 4'"
+bindsym $mod+shif+z exec --no-startup-id "i3-msg -t command 'workspace 4; workspace 3'"
+bindsym $mod+x exec --no-startup-id "i3-msg -t command 'workspace 5; workspace 6'"
+bindsym $mod+shift+x exec --no-startup-id "i3-msg -t command 'workspace 6; workspace 5'"
+
+assign [class="^arma$"] $ws3
+for_window [class="^arma$"] floating disable, fullscreen enable, workspace --no-auto-back-and-forth $ws3
+
+for_window [class="^Arandr$"] output left
+
+assign [class="firefox"] $ws2
+#spotify doesn't work as normal
+for_window [class="Spotify"] move --no-auto-back-and-forth to workspace $ws10
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes' 'i3-msg exit'"
+
+bindsym $mod+Mod1+x exec i3lock -c 000000
+
+bindsym $mod+r mode "resize"
+
+# Pulse Audio controls; increase, decrease, mute
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+
+# resize mode
+mode "resize" {
+        bindsym $left       resize shrink width 10 px or 10 ppt
+        bindsym $down       resize grow height 10 px or 10 ppt
+        bindsym $up         resize shrink height 10 px or 10 ppt
+        bindsym $right      resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left        resize shrink width 10 px or 10 ppt
+        bindsym Down        resize grow height 10 px or 10 ppt
+        bindsym Up          resize shrink height 10 px or 10 ppt
+        bindsym Right       resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+set $output0 "eDP-1-1" "DP-0.8"
+set $output1 "DP-1-1" "DP-0.1"
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+workspace $ws1 output $output1
+workspace $ws2 output $output0
+workspace $ws3 output $output0
+workspace $ws4 output $output1
+workspace $ws5 output $output0
+workspace $ws6 output $output1
+workspace $ws9 output $output1
+workspace $ws10 output $output1
+
+exec firefox
+exec optimus-manager-qt
+exec --no-startup-id nm-applet
+exec --no-startup-id pasystray
+exec --no-startup-id autorandr --change --force
+
+for_window [class="Lutris"] floating enable
+for_window [class="Wine"] floating enable
