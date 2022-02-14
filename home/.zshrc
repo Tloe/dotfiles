@@ -104,9 +104,10 @@ export PATH="/home/t/.local/share/gem/ruby/3.0.0/bin:$PATH"
 export PATH="$PATH:$(go env GOPATH)/bin"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+alias cddd='cd ~/dotfiles'
 alias cdd='cd ~/dev'
 alias cdp='cd ~/dev/protojour'
-alias cdv='cd ~/.config/nvim'
+alias cdv='cd ~/dotfiles/nvim/.config/nvim'
 alias cda='cd ~/dev/protojour/authly-core'
 alias cdm='cd ~/dev/protojour/memoriam'
 alias cdt='cd ~/dev/private/TEngine'

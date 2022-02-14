@@ -31,13 +31,11 @@ map{'n', '<C-Right>', '<C-w><C-l>'}
 
 map{'n', '<F1>', ':NvimTreeToggle<CR>'}
 
-map{'n', 'H', ':helpclose<CR>'}
 map{'n', '<space>cc', '<cmd> noh<cr>'}
 
 map{'n', '<leader>yy', '"+yy'}
 
 map{'n', '<space>rr', ':LspRestart<cr>'}
-
 
 -- telescope
 map{'n', '<C-p>', ':lua require"telescope.builtin".find_files{}<cr>'}

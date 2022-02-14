@@ -24,7 +24,7 @@ require('lualine').setup {
     lualine_x = { "location" },
     lualine_y = {},
     lualine_z = {}
-  },  
+  },
   -- tabline = {
   --   lualine_a = {},
   --   lualine_b = {'branch'},
