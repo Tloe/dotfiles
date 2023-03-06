@@ -33,7 +33,7 @@ bar {
         status_command /usr/bin/i3status-rs /home/t/.config/i3status-rust/config.toml
         bindsym button4 nop
         bindsym button5 nop
-        height 30
+        height 20
 
         tray_output primary
 

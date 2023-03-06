@@ -1,4 +1,10 @@
-local opts = { noremap=true, silent=true }
+-- mason installs and runs lsp servers
+require("mason").setup()
+require("mason-lspconfig").setup {
+  ensure_installed = { "lua_ls", "yamlls", "gopls", "cmake", 'jsonls', 'clangd' },
+}
+local util = require "lspconfig.util"
+local opts = { noremap = true, silent = true }
 
 vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
 vim.api.nvim_set_keymap('n', '`', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
@@ -15,42 +21,82 @@ local function on_attach(_, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format({async = true})<CR>', opts)
   -- telescope mappings
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', ':lua require"telescope.builtin".lsp_references{}<cr>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>dd', ':lua require"telescope.builtin".diagnostics{}<cr>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', ':lua require"telescope.builtin".lsp_implementation{}<cr>', opts)
+
+  require "lsp_signature".on_attach({
+    bind = true, -- This is mandatory, otherwise border config won't get registered.
+    doc_lines = 0,
+    handler_opts = {
+      border = "rounded"
+    }
+  }, bufnr)
 end
 
-
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
 -- cmake
-require'lspconfig'.cmake.setup{
-  capabilities = capabilities,
+require 'lspconfig'.cmake.setup {
+  capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
   on_attach = on_attach,
 }
 
 -- yaml
-require'lspconfig'.yamlls.setup{
-  capabilities = capabilities,
+require 'lspconfig'.yamlls.setup {
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
   on_attach = on_attach,
+  settings = {
+    yaml = {
+      yamlVersion = 1.1,
+      schemaStore = {
+        url = "https://www.schemastore.org/api/json/catalog.json",
+        enable = true,
+      },
+      format = {
+        enable = true,
+      },
+      hover = true,
+      validate = true,
+      completion = true,
+    }
+  }
 }
 
 -- clangd
-require'lspconfig'.clangd.setup{
-  capabilities = capabilities,
+require 'lspconfig'.clangd.setup {
+  capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
   on_attach = on_attach,
+  cmd = {
+    "/home/t/dev/llvm-project/build/bin/clangd",
+    "--background-index",
+    "--query-driver=/home/t/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf*",
+  },
+  filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
 }
 
---sumneko lua
+-- local server_config = {
+--   capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+--   on_attach = on_attach,
+--   filetypes = { "c", "cpp", "objc", "objcpp", "opencl" },
+--   root_dir = function(fname)
+--     return util.root_pattern("compile_commands.json", "compile_flags.txt", ".git")(fname)
+--         or util.find_git_ancestor(fname)
+--   end,
+--   init_options = { cache = {
+--     directory = vim.fs.normalize "~/.cache/ccls",
+--   }},
+-- }
+-- require("ccls").setup { lsp = { lspconfig = server_config } }
+
+--lua_ls lua
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
-require'lspconfig'.sumneko_lua.setup {
-  capabilities = capabilities,
+require 'lspconfig'.lua_ls.setup {
+  capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
   on_attach = on_attach,
   settings = {
     Lua = {
@@ -62,7 +108,7 @@ require'lspconfig'.sumneko_lua.setup {
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
+        globals = { 'vim' },
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
@@ -78,21 +124,28 @@ require'lspconfig'.sumneko_lua.setup {
 
 
 -- gopls
-require'lspconfig'.gopls.setup{
-  capabilities = capabilities,
-  cmd = {'gopls'},
+require 'lspconfig'.gopls.setup {
+  capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  on_attach = on_attach,
   flags = {
-    debounce_text_changes = 150, -- never send document change notifications to the server more frequently than the X ms
+    allow_incremental_sync = false,
   },
-  on_attach = on_attach
+  cmd = { 'gopls', 'serve' },
+  filetypes = { 'go', 'gomod' },
+  root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+  settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+      },
+      staticcheck = true,
+    },
+  },
 }
 
--- lsp_signature
-require "lsp_signature".setup{
-  capabilities = capabilities,
-  bind = true, -- This is mandatory, otherwise border config won't get registered.
-  doc_lines = 0,
-  handler_opts = {
-    border = "rounded"
-  }
+-- json
+
+require 'lspconfig'.jsonls.setup {
+  capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  on_attach = on_attach,
 }

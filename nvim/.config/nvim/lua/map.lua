@@ -18,6 +18,7 @@ map{'n', '<C-m>', ':bn<cr>'}                          -- next buffer
 
 map{'n', '<leader>s', ':%s/<C-r><C-w>/'}              -- Substitute
 
+
 map{'n','<S-z>', '<Nop>'}
 
 map{'n', '<C-h>', '<C-w><C-h>'}
@@ -29,6 +30,9 @@ map{'n', '<C-Down>', '<C-w><C-j>'}
 map{'n', '<C-Up>', '<C-w><C-k>'}
 map{'n', '<C-Right>', '<C-w><C-l>'}
 
+map{'n', '<C-,>', ':SidewaysLeft<CR>'}
+map{'n', '<C-.>', ':SidewaysRight<CR>'}
+
 map{'n', '<F1>', ':NvimTreeToggle<CR>'}
 
 map{'n', '<space>cc', '<cmd> noh<cr>'}
@@ -39,19 +43,18 @@ map{'n', '<space>rr', ':LspRestart<cr>'}
 
 -- telescope
 map{'n', '<C-p>', ':lua require"telescope.builtin".find_files{}<cr>'}
+map{'n', '<leader>e', ':lua require"telescope.builtin".resume{}<cr>'}
 map{'n', '<C-g>', ':lua require"telescope.builtin".live_grep{}<cr>'}
 map{'n', '<C-a>', ':lua require"telescope.builtin".grep_string{}<cr>'}
 map{'n', '<C-b>', ':lua require"telescope.builtin".buffers{}<cr>'}
-map{'n', '<C-f>', ':lua require"telescope.builtin".file_browser{}<cr>'}
+map{'n', '<C-f>', ':lua require"telescope.builtin".current_buffer_tags{}<cr>'}
 map{'n', '<leader>hh', ':lua require("telescope.builtin").help_tags{}<cr>'}
 map{'n', '<space>c', ':lua require"telescope.builtin".find_files{ cwd = "~/.config/nvim/" }<cr>'}
 
+map{'v', '<leader>s', '"hy:%s/<C-r>h/'}
 
--- vim.cmd([
--- [
--- " Move line(s) macros
--- inoremap        <C-,> <ESC> :m .+1<CR>==gi
--- inoremap        <C-.> <ESC> :m .-2<CR>==gi
--- vnoremap        <C-,>       :m '>+1<CR>gv=gv
--- vnoremap        <C-.>       :m '<-2<CR>gv=gv
+map{'n', '<F5>', ':lua require"dap".continue()' }
+map{'n', '<F6>', ':lua require"dap".run_last()' }
+map{'n', '<F7>', ':lua require"dap".toggle_breakpoint()' }
+
 

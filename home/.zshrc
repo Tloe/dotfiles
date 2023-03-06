@@ -98,11 +98,12 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 export PATH="/home/t/.local/bin:$PATH"
 export PATH="/home/t/.local/share/gem/ruby/3.0.0/bin:$PATH"
 
 export PATH="$PATH:$(go env GOPATH)/bin"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 alias cddd='cd ~/dotfiles'
 alias cdd='cd ~/dev'
@@ -113,7 +114,9 @@ alias cdm='cd ~/dev/protojour/memoriam'
 alias cdt='cd ~/dev/private/TEngine'
 alias cdaa='cd ~/dev/Aoa1WinNASM/'
 
-alias go='richgo'
+# alias go='richgo'
+alias go='grc go'
+alias goproc='ps aux | grep go-build | grep -v grep'
 
 alias cat='bat --paging=never'
 
