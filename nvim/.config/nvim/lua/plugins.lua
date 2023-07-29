@@ -52,13 +52,14 @@ return require('packer').startup(function(use)
 
   use 'ggandor/lightspeed.nvim'
 
-  use 'AndrewRadev/sideways.vim'
+  use 'PeterRincker/vim-argumentative'
 
   use 'normen/vim-pio'
 
   use 'ErichDonGubler/lsp_lines.nvim'
 
-  use 'ranjithshegde/ccls.nvim'
+  -- use 'ranjithshegde/ccls.nvim'
+  use 'thosakwe/vim-flutter'
 
   use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install",
     setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })

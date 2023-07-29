@@ -1,7 +1,7 @@
 -- mason installs and runs lsp servers
 require("mason").setup()
 require("mason-lspconfig").setup {
-  ensure_installed = { "lua_ls", "yamlls", "gopls", "cmake", 'jsonls', 'clangd' },
+  ensure_installed = { "lua_ls", "yamlls", "gopls", "cmake", 'jsonls', 'clangd', 'kotlin_language_server', 'pyright' },
 }
 local util = require "lspconfig.util"
 local opts = { noremap = true, silent = true }
@@ -16,7 +16,7 @@ local function on_attach(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>gd', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
@@ -37,6 +37,12 @@ local function on_attach(_, bufnr)
     }
   }, bufnr)
 end
+
+-- dart
+require 'lspconfig'.dartls.setup {
+  capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  on_attach = on_attach,
+}
 
 -- cmake
 require 'lspconfig'.cmake.setup {
@@ -65,14 +71,18 @@ require 'lspconfig'.yamlls.setup {
   }
 }
 
+-- kotlin
+require'lspconfig'.kotlin_language_server.setup{}
+
 -- clangd
 require 'lspconfig'.clangd.setup {
   capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
   on_attach = on_attach,
   cmd = {
+--    "/usr/local/bin/clangd",
     "/home/t/dev/llvm-project/build/bin/clangd",
     "--background-index",
-    "--query-driver=/home/t/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf*",
+    "--query-driver=/home/t/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-g*",
   },
   filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
 }
@@ -90,6 +100,8 @@ require 'lspconfig'.clangd.setup {
 --   }},
 -- }
 -- require("ccls").setup { lsp = { lspconfig = server_config } }
+
+require'lspconfig'.pyright.setup{}
 
 --lua_ls lua
 local runtime_path = vim.split(package.path, ';')

@@ -18,7 +18,6 @@ map{'n', '<C-m>', ':bn<cr>'}                          -- next buffer
 
 map{'n', '<leader>s', ':%s/<C-r><C-w>/'}              -- Substitute
 
-
 map{'n','<S-z>', '<Nop>'}
 
 map{'n', '<C-h>', '<C-w><C-h>'}
@@ -29,9 +28,6 @@ map{'n', '<C-Left>', '<C-w><C-h>'}
 map{'n', '<C-Down>', '<C-w><C-j>'}
 map{'n', '<C-Up>', '<C-w><C-k>'}
 map{'n', '<C-Right>', '<C-w><C-l>'}
-
-map{'n', '<C-,>', ':SidewaysLeft<CR>'}
-map{'n', '<C-.>', ':SidewaysRight<CR>'}
 
 map{'n', '<F1>', ':NvimTreeToggle<CR>'}
 
