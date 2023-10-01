@@ -58,9 +58,10 @@ require 'lspconfig'.yamlls.setup {
     yaml = {
       yamlVersion = 1.1,
       schemaStore = {
-        url = "https://www.schemastore.org/api/json/catalog.json",
-        enable = true,
+        url = "",
+        enable = false,
       },
+      schemas = require('schemastore').yaml.schemas(),
       format = {
         enable = true,
       },
@@ -160,4 +161,10 @@ require 'lspconfig'.gopls.setup {
 require 'lspconfig'.jsonls.setup {
   capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()),
   on_attach = on_attach,
+  settings = {
+    json = {
+      schemas = require('schemastore').json.schemas(),
+      validate = { enable = true },
+    },
+  },
 }
