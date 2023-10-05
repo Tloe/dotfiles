@@ -5,4 +5,5 @@ stow nvim -t ~
 stow i3 -t ~
 stow i3status-rust -t ~
 stow kitty -t ~
+stow zsh -t ~
 
