@@ -4,3 +4,6 @@
 [submodule "zsh/.zsh/plugins/fast-syntax-highlighting"]
 	path = zsh/.zsh/plugins/fast-syntax-highlighting
 	url = git@github.com:zdharma-zmirror/fast-syntax-highlighting.git
+[submodule "zsh/.zsh/plugins/forgit"]
+	path = zsh/.zsh/plugins/forgit
+	url = https://github.com/wfxr/forgit.git
