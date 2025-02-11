@@ -65,6 +65,7 @@ alias cdam='cd ~/dev/protojour/authly-core-master'
 alias cdm='cd ~/dev/protojour/memoriam'
 alias cdt='cd ~/dev/private/TEngine'
 alias cdaa='cd ~/dev/Aoa1WinNASM/'
+alias cdte='cd ~/dev/tengine/'
 alias l='ls -ll'
 alias ll='ls -all'
 alias go='/usr/bin/grc go'
@@ -75,4 +76,5 @@ alias luamake=/home/t/dev/lua-language-server/3rd/luamake/luamake
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export PATH="$PATH":"$HOME/.pub-cache/bin"
+export PATH="$PATH:$HOME/.pub-cache/bin:~/platformio/penv/bin:$JAVA_HOME=/opt/android-studio/jbr:$JAVA_HOME/bin:/home/t/flutter/bin"
+export CHROME_EXECUTABLE=/usr/bin/firefox

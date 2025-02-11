@@ -205,3 +205,5 @@ exec --no-startup-id autorandr --change --force
 
 for_window [class="Lutris"] floating enable
 for_window [class="Wine"] floating enable
+
+for_window [class="fightspace"] floating enable

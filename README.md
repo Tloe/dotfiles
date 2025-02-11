@@ -5,3 +5,4 @@ Other files goes in seperate folders and will be symlinked with stow eg.:
 
 ~/.config/nvim/ -> ~/dotfiles/nvim/.config/nvim
 
+After clone run `git submodule update --init --recursive` to get all submodules

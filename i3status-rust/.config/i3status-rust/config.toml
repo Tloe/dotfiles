@@ -14,26 +14,22 @@ interval = 1
 # interval = 1
 # format = "{1m}"
 
-# [[block]]
-# block = "temperature"
-# collapsed = false
-# interval = 5
-# format = "{max}"
-# chip = "k10temp-pci-00c3"
-# inputs = ["Tctl","Tdie"]
-# driver="sensors"
-# info = 75
-# idle = 75
-# [block.theme_overrides]
-# info_bg = "#282828"
-# idle_bg = "#282828"
+[[block]]
+block = "temperature"
+interval = 10
+format = "{$icon} {$max}"
+chip = "k10temp-pci-00c3"
+inputs = ["Tctl","Tdie"]
+info = 75
+idle = 75
+[block.theme_overrides]
+info_bg = "#282828"
+idle_bg = "#282828"
 
-# [[block]]
-# block = "nvidia_gpu"
-# show_memory = false
-# show_utilization = false
-# label = ""
-# interval = 1
+[[block]]
+block = "nvidia_gpu"
+interval = 1
+format = " $icon GT 1030 $utilization $temperature $clocks "
 
 [[block]]
 block = "sound"
