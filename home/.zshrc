@@ -55,6 +55,7 @@ bindkey  "^[^["   kill-whole-line
 # Aliases
 alias cddd='cd ~/dotfiles'
 alias cdd='cd ~/dev'
+alias cdte='cd ~/dev/tengine'
 alias cdp='cd ~/dev/protojour'
 alias cdv='cd ~/dotfiles/nvim/.config/nvim'
 alias cda='cd ~/dev/protojour/authly-core'
@@ -63,11 +64,10 @@ alias cdsf='cd ~/dev/skraag/skraag-flutter'
 alias cdsw='cd ~/dev/skraag/skraag-web'
 alias cdam='cd ~/dev/protojour/authly-core-master'
 alias cdm='cd ~/dev/protojour/memoriam'
-alias cdt='cd ~/dev/private/TEngine'
 alias cdaa='cd ~/dev/Aoa1WinNASM/'
 alias l='ls -ll'
 alias ll='ls -all'
-alias go='/usr/bin/grc go'
+alias go='/usr/bin/grc /usr/bin/go'
 alias goproc='ps aux | grep go-build | grep -v grep'
 alias cat='bat --paging=never'
 alias luamake=/home/t/dev/lua-language-server/3rd/luamake/luamake
@@ -75,4 +75,4 @@ alias luamake=/home/t/dev/lua-language-server/3rd/luamake/luamake
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export PATH="$PATH":"$HOME/.pub-cache/bin"
+export PATH="$PATH":"$HOME/.pub-cache/bin:$HOME/.platformio/penv/bin"

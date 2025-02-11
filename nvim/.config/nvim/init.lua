@@ -2,8 +2,8 @@ local opt = vim.opt;
 local cmd = vim.api.nvim_command;
 local g = vim.g
 
-require'plugins'
 require'map'
+require("config.lazy")
 
 opt.cmdheight = 0
 
@@ -17,9 +17,9 @@ opt.smarttab = true
 opt.termguicolors = true         	-- 24bit rgb
 opt.background = 'dark'
 
-g.gruvbox_material_palette = 'material'
-g.gruvbox_material_background = 'hard'
-cmd 'colorscheme gruvbox'
+-- g.gruvbox_material_palette = 'material'
+-- g.gruvbox_material_background = 'hard'
+-- cmd 'colorscheme gruvbox'
 -- cmd 'colorscheme nord'
 
 opt.mouse = 'a' -- mouse activated
@@ -61,3 +61,4 @@ vim.fn.sign_define("DiagnosticSignInformation", { text = "", texthl = "Diagno
 vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
 
 vim.diagnostic.config{  virtual_text = false}
+
