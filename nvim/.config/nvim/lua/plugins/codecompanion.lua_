@@ -1,0 +1,56 @@
+return {}
+-- return {
+--   {
+--     "olimorris/codecompanion.nvim",
+--     dependencies = {
+--       "nvim-lua/plenary.nvim",
+--       "nvim-treesitter/nvim-treesitter",
+--       "nvim-telescope/telescope.nvim",
+--       "nvim-telescope/telescope-file-browser.nvim",
+--     },
+--     cmd = {
+--       "CodeCompanionChat",
+--       "CodeCompanionInline",
+--       "CodeCompanionRunAgent",
+--       "CodeCompanionCmd",
+--     },
+--     opts = {
+--       providers = {
+--         pickers = {
+--           telescope = function(opts)
+--             require("telescope").load_extension("file_browser")
+--             require("telescope").extensions.file_browser.file_browser(opts)
+--           end,
+--         },
+--       },
+--       root_patterns = { ".git" },
+--
+--       ignore = { ".git", "util" },
+--
+--       display = {
+--         chat = {
+--           enable_slash_commands = true,
+--           window = { position = "right" },
+--         },
+--       },
+--
+--       adapters = {
+--         copilot = function()
+--           return require("codecompanion.adapters").extend("copilot", {})
+--         end,
+--       },
+--       strategies = {
+--         chat   = {
+--           adapter = "copilot",
+--         },
+--         inline = { adapter = "copilot" },
+--         agent  = { adapter = "copilot" },
+--       },
+--     },
+--     keys = {
+--       { "<space>cc", "<cmd>CodeCompanionChat<CR>",   silent = true, noremap = true },
+--       { "<space>ci", "<cmd>CodeCompanionInline<CR>", silent = true, noremap = true },
+--       { "<space>cw", [[:CodeCompanionCmd "/"]],      silent = true, noremap = true },
+--     },
+--   },
+-- }

@@ -5,6 +5,7 @@ local g = vim.g
 require'map'
 require("config.lazy")
 
+opt.encoding = 'utf8'
 opt.cmdheight = 0
 
 -- tabs
@@ -50,7 +51,6 @@ opt.splitbelow= true -- new split window is put below
 opt.splitright= true -- new vsplit window is put right
 opt.autoread= true -- auto read file if it has not changed in vim
 opt.signcolumn= 'yes:1'   -- error/warning gutter
-opt.encoding = 'utf8'
 opt.fileencoding = 'utf8'
 opt.ruler = true
 opt.scrolloff = 4

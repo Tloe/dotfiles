@@ -34,4 +34,6 @@ return {
   { 'thosakwe/vim-flutter' },
   { "b0o/schemastore.nvim" },
   { 'jose-elias-alvarez/null-ls.nvim' },
+  { 'github/copilot.vim' },
+  { 'CopilotC-Nvim/CopilotChat.nvim' },
 }

@@ -35,35 +35,39 @@ return {
     dependencies = { 'williamboman/mason-lspconfig.nvim', 'williamboman/mason.nvim' },
     config = function()
       local util = require "lspconfig.util"
-      local opts = { noremap = true, silent = true }
 
-      vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-      vim.api.nvim_set_keymap('n', '`', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-      vim.api.nvim_set_keymap('n', '<BS>', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-      vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+      -- vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, { desc = "Show diagnostics float" })
+      vim.keymap.set('n', '`', vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+      vim.keymap.set('n', '<BS>', vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+      -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, { desc = "Diagnostics to loclist" })
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           local bufnr = args.buf
           -- Enable completion triggered by <c-x><c-o>
-          vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+          vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+          local function bufmap(mode, lhs, rhs, desc)
+            vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+          end
 
           -- Mappings.
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>gd', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format({async = true})<CR>', opts)
-          -- telescope mappings
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', ':lua require"telescope.builtin".lsp_references{}<cr>', opts)
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>dd', ':lua require"telescope.builtin".diagnostics{}<cr>', opts)
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', ':lua require"telescope.builtin".lsp_implementation{}<cr>', opts)
+          bufmap('n', '<space>gd', vim.lsp.buf.declaration, "Go to declaration")
+          bufmap('n', 'gd', vim.lsp.buf.definition, "Go to definition")
+          bufmap('n', 'K', vim.lsp.buf.hover, "Hover documentation")
+          bufmap('n', '<C-k>', vim.lsp.buf.signature_help, "Signature help")
+          -- bufmap('n', '<space>D', vim.lsp.buf.type_definition, "Type definition")
+          bufmap('n', '<space>rn', vim.lsp.buf.rename, "Rename symbol")
+          bufmap('n', '<space>ca', vim.lsp.buf.code_action, "Code action")
+          bufmap('n', '<space>f', function() vim.lsp.buf.format({ async = true }) end, "Format")
+
+          -- Telescope mappings
+          local tb = require("telescope.builtin")
+          bufmap('n', 'gr', tb.lsp_references, "LSP References")
+          bufmap('n', '<space>dd', tb.diagnostics, "Workspace Diagnostics")
+          bufmap('n', 'gi', tb.lsp_implementations, "LSP Implementations")
         end
       })
-
 
       -- dart
       require 'lspconfig'.dartls.setup {

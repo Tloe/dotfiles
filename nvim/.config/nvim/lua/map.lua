@@ -6,8 +6,6 @@ map{'n','<Z>', '<Nop>', {noremap = false}}            -- Dont put in background
 
 map{'i', 'jj', '<Esc>'}
 
-map{'n', '<leader>zz', ':split<cr><C-w><C-j>:lua require"telescope.builtin".find_files{}<cr>'} --new split move to and open file
-map{'n', '<leader>ss', ':vsplit<cr><C-w><C-l>:lua require"telescope.builtin".find_files{}<cr>'} --new split move to and open file
 map{'n', '<C-s>', ':vsplit<cr>'}                    	-- vsplit
 map{'n', '<C-z>', ':split<cr>'}                       -- splitt
 map{'n', '<C-q>', ':quit<cr>', {noremap = false }}    -- quit split
@@ -45,7 +43,7 @@ map{'n', '<C-a>', ':lua require"telescope.builtin".grep_string{}<cr>'}
 map{'n', '<C-b>', ':lua require"telescope.builtin".buffers{}<cr>'}
 map{'n', '<C-f>', ':lua require"telescope.builtin".current_buffer_tags{}<cr>'}
 map{'n', '<leader>hh', ':lua require("telescope.builtin").help_tags{}<cr>'}
-map{'n', '<space>c', ':lua require"telescope.builtin".find_files{ cwd = "~/.config/nvim/" }<cr>'}
+-- map{'n', '<space>c', ':lua require"telescope.builtin".find_files{ cwd = "~/.config/nvim/" }<cr>'}
 
 map{'v', '<leader>s', '"hy:%s/<C-r>h/'}
 

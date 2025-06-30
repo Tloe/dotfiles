@@ -45,9 +45,7 @@ return {
     -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline({ '/', '?' }, {
       mapping = cmp.mapping.preset.cmdline(),
-      sources = {
-        { name = 'buffer' }
-      }
+      sources = { { name = 'buffer' } }
     })
 
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
@@ -60,5 +58,25 @@ return {
       })
 
     })
+
+    -- cmp.setup.filetype('codecompanion', {
+    --   mapping = cmp.mapping.preset.insert({
+    --     ['<C-Space>'] = cmp.mapping.complete(),
+    --     ['<CR>']      = cmp.mapping.confirm({ select = true }),
+    --   }),
+    --   sources = cmp.config.sources({
+    --     -- slash commands from CodeCompanion
+    --     { name = 'codecompanion' },
+    --     -- file-system paths for /file
+    --     { name = 'path' ,
+    --       option = {
+    --         trailing_slash = true, -- add trailing slash to paths
+    --       },
+    --     }
+    --   }, {
+    --     -- fallback to buffer for long prompts
+    --     { name = 'buffer' },
+    --   }),
+    -- })
   end,
 }
